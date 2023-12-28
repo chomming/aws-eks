@@ -31,9 +31,9 @@ $ aws iam create-policy \
 --policy-document file://iam_policy.json
 
 ## IAM role 생성하기
-$ POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text) \
-$ ROLE_NAME="AmazonEKSLoadBalancerControllerRole" \
-$ CLUSTER_NAME="${eks-cluster-name}" \
+$ POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text) <br/></br>
+$ ROLE_NAME="AmazonEKSLoadBalancerControllerRole" <br/></br>
+$ CLUSTER_NAME="${eks-cluster-name}" <br/></br>
 
 ## kubernetes serviceaccount 생성하기
 $ eksctl create iamserviceaccount \
@@ -45,8 +45,8 @@ $ eksctl create iamserviceaccount \
 --approve
 
 ## AWS ALB controller 설치하기
-$ helm repo add eks https://aws.github.io/eks-charts
-$ helm repo update
+$ helm repo add eks https://aws.github.io/eks-charts <br/></br>
+$ helm repo update <br/></br>
 $ helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
 -n kube-system \
 --set clusterName=${CLUSTER_NAME} \
