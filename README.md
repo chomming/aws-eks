@@ -22,5 +22,87 @@
     - AWS Management Console 사용하여 워크로드에 대한 정보 볼 수 있음
 
 ## 클러스터 IAM OIDC 생성하기
-$ eksctl utils associate-iam-oidc-provider --cluster cmk-eks-cluster --approve
+$ eksctl utils associate-iam-oidc-provider --cluster ${CLUSTER_NAME} --approve
+
+## IAM policy 생성하기
+$ curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.7/docs/install/iam_policy.json
+$ aws iam create-policy \
+--policy-name AWSLoadBalancerControllerIAMPolicy \
+--policy-document file://iam_policy.json
+
+## IAM role 생성하기
+$ POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
+$ ROLE_NAME="AmazonEKSLoadBalancerControllerRole"
+$ CLUSTER_NAME="${eks-cluster-name}"
+
+## kubernetes serviceaccount 생성하기
+$ eksctl create iamserviceaccount \
+--cluster ${CLUSTER_NAME} \
+--namespace=kube-system \
+--name=aws-load-balancer-controller \
+--role-name ${ROLE_NAME} \
+--attach-policy-arn=${POLICY_ARN} \
+--approve
+
+## AWS ALB controller 설치하기
+$ helm repo add eks https://aws.github.io/eks-charts
+$ helm repo update
+$ helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
+-n kube-system \
+--set clusterName=${CLUSTER_NAME} \
+--set serviceAccount.create=false \
+--set serviceAccount.name=aws-load-balancer-controller
+
+## kube-system namespace에 ALB Controller pod가 실행 중인지 확인하기
+$ kubectl -n kube-system get po
+
+## NLB 생성하기
+$ vi nlb.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-nlb
+spec:
+  selector:
+    matchLabels:
+      app: tomcat-nlb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tomcat-nlb
+    spec:
+      containers:
+        - name: tomcat
+          image: tomcat:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat-nlb
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "8080"
+spec:
+  type: LoadBalancer
+  loadBalancerClass: service.k8s.aws/nlb
+  selector:
+    app: tomcat-nlb
+  ports:
+    - port: 80  # External port
+      targetPort: 8080
+      protocol: TCP
+
+
+
+
+
+
+
+
+
+
 
