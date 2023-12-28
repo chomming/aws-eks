@@ -61,7 +61,7 @@ $ vi nlb.yaml \
 apiVersion: apps/v1 \
 kind: Deployment \
 metadata: \
-  name: tomcat-nlb \
+&nbsp;&nbsp;name: tomcat-nlb \
 spec: \
   selector: \
     matchLabels: \
