@@ -31,9 +31,9 @@ $ aws iam create-policy \
 --policy-document file://iam_policy.json
 
 ## IAM role 생성하기
-$ POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
-$ ROLE_NAME="AmazonEKSLoadBalancerControllerRole"
-$ CLUSTER_NAME="${eks-cluster-name}"
+$ POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text) \
+$ ROLE_NAME="AmazonEKSLoadBalancerControllerRole" \
+$ CLUSTER_NAME="${eks-cluster-name}" \
 
 ## kubernetes serviceaccount 생성하기
 $ eksctl create iamserviceaccount \
