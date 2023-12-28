@@ -58,10 +58,10 @@ $ kubectl -n kube-system get po
 
 ## NLB 생성하기
 $ vi nlb.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: tomcat-nlb
+apiVersion: apps/v1 \
+kind: Deployment \
+metadata: \
+  name: tomcat-nlb \
 spec:
   selector: 
     matchLabels: 
