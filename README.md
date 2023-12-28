@@ -57,44 +57,44 @@ $ helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-cont
 $ kubectl -n kube-system get po
 
 ## NLB 생성하기
-$ vi nlb.yaml <br/></br>
-apiVersion: apps/v1 <br/></br>
-kind: Deployment <br/></br>
-metadata: <br/></br>
-  name: tomcat-nlb <br/></br>
-spec: <br/></br>
-  selector: <br/></br>
-    matchLabels: <br/></br>
-      app: tomcat-nlb <br/></br>
-  replicas: 1 <br/></br> 
-  template: <br/></br>
-    metadata: <br/></br>
-      labels: <br/></br>
-        app: tomcat-nlb <br/></br>
-    spec: <br/></br>
-      containers: <br/></br>
-        - name: tomcat <br/></br>
-          image: tomcat:latest <br/></br>
-          ports: <br/></br>
+$ vi nlb.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-nlb
+spec:
+  selector: 
+    matchLabels: 
+      app: tomcat-nlb 
+  replicas: 1
+  template: 
+    metadata:
+      labels: 
+        app: tomcat-nlb 
+    spec: 
+      containers: 
+        - name: tomcat 
+          image: tomcat:latest 
+          ports: 
             - containerPort: 8080 <br/></br>
 --- <br/></br>
-apiVersion: v1 <br/></br>
-kind: Service <br/></br>
-metadata: <br/></br>
-  name: tomcat-nlb <br/></br>
-  annotations: <br/></br>
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip <br/></br>
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing <br/></br>
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "8080" <br/></br>
-spec: <br/></br>
-  type: LoadBalancer <br/></br>
-  loadBalancerClass: service.k8s.aws/nlb <br/></br>
-  selector: <br/></br>
-    app: tomcat-nlb <br/></br>
-  ports: <br/></br>
-    - port: 80  <br/></br>
-      targetPort: 8080 <br/></br>
-      protocol: TCP <br/></br>
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: tomcat-nlb 
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip 
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "8080" 
+spec:
+  type: LoadBalancer
+  loadBalancerClass: service.k8s.aws/nlb 
+  selector: 
+    app: tomcat-nlb 
+  ports: 
+    - port: 80 
+      targetPort: 8080 
+      protocol: TCP 
 
 
 
