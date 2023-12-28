@@ -61,40 +61,40 @@ $ vi nlb.yaml \
 apiVersion: apps/v1 \
 kind: Deployment \
 metadata: \
-  name: tomcat-nlb \
+  name: tomcat-nlb \
 spec: \
-  selector: \
-    matchLabels: \
-      app: tomcat-nlb \
-  replicas: 1 \
-  template: \
-    metadata: \
-      labels: \
-        app: tomcat-nlb \
-    spec: \
-      containers: \
-        - name: tomcat \
-          image: tomcat:latest \
-          ports: \
-            - containerPort: 8080 \
+  selector: \
+    matchLabels: \
+      app: tomcat-nlb \
+  replicas: 1 \
+  template: \
+    metadata: \
+      labels: \
+        app: tomcat-nlb \
+    spec: \
+      containers: \
+        - name: tomcat \
+          image: tomcat:latest \
+          ports: \
+            - containerPort: 8080 \
 --- \
 apiVersion: v1 \
 kind: Service \
 metadata: \
-  name: tomcat-nlb \
-  annotations: \
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip \
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing \
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "8080" \
+  name: tomcat-nlb \
+  annotations: \
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip \
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing \
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "8080" \
 spec: \
-  type: LoadBalancer \
-  loadBalancerClass: service.k8s.aws/nlb \
-  selector: \
-    app: tomcat-nlb \
-  ports: \
-    - port: 80 \
-      targetPort: 8080 \
-      protocol: TCP \
+  type: LoadBalancer \
+  loadBalancerClass: service.k8s.aws/nlb \
+  selector: \
+    app: tomcat-nlb \
+  ports: \
+    - port: 80 \
+      targetPort: 8080 \
+      protocol: TCP \
 
 
 
