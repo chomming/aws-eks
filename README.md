@@ -57,7 +57,8 @@ $ helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-cont
 $ kubectl -n kube-system get po
 
 ## NLB 생성하기
-$ vi nlb.yaml \
+$ vi nlb.yaml
+- [nlb.yaml](https://github.com/chomming/aws-eks/blob/main/nlb.yaml)
 
 
 
