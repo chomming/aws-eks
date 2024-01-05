@@ -1,0 +1,12 @@
+From tomcat:9
+
+USER root
+
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install git -y
+RUN git clone [git 주소] /test
+
+WORKDIR /test
+
+CMD ["java", "-jar", "/test/tomcat.war", "run"]
