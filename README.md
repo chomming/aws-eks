@@ -18,5 +18,18 @@
 - service.yaml 파일
   - [service.yaml](https://github.com/chomming/aws-eks/blob/main/service.yaml)
 - ingress.yaml 파일
-  - [ingress.yaml]()
-- 
+  - [ingress.yaml](https://github.com/chomming/aws-eks/blob/main/ingress.yaml)
+
+## 전반적인 과정-3 kubectl 설치 관련
+- 최신 릴리스 다운로드하기
+  - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+- 바이너리 검증하기
+  - curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+  - echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+- 설치한 버전 확인하기
+  - kubectl version --client
+
+## 전반적인 과정-4 pod 배포 관련
+- kubectl apply -f deployment.yaml
+- kubectl apply -f service.yaml
+- kubectl apply -f ingress.yaml
