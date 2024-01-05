@@ -14,7 +14,7 @@
  
 ## 전반적인 과정-2 Yaml 관련
 - deployment.yaml 파일
-  - [deployment.yaml]
+  - [deployment.yaml](https://github.com/chomming/aws-eks/blob/main/deployment.yaml)
 - service.yaml 파일
   - [service.yaml]
 - 
