@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <이름>
+  namespace: <네임스페이스>
+  labels:
+    app: <라벨>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <라벨>
+  template:
+    metadata:
+      labels:
+        app: <라벨>
+    spec:
+      containers:
+      - name: <컨테이너 이름>
+        image: <ECR 이미지 주소>
+        ports:
+        - name: <포트 이름>
+          containerPort: <포트>
+        imagePullPolicy: Always
