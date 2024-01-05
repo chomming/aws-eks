@@ -16,5 +16,7 @@
 - deployment.yaml 파일
   - [deployment.yaml](https://github.com/chomming/aws-eks/blob/main/deployment.yaml)
 - service.yaml 파일
-  - [service.yaml]
+  - [service.yaml](https://github.com/chomming/aws-eks/blob/main/service.yaml)
+- ingress.yaml 파일
+  - [ingress.yaml]()
 - 
